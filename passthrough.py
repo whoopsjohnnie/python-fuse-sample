@@ -8,7 +8,6 @@ import errno
 
 from fuse import FUSE, FuseOSError, Operations
 
-
 class Passthrough(Operations):
     def __init__(self, root):
         self.root = root
@@ -128,7 +127,10 @@ class Passthrough(Operations):
 
 
 def main(mountpoint, root):
-    FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True)
+    try:
+        FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True)
+    except:
+        print("ERR")
 
 if __name__ == '__main__':
     main(sys.argv[2], sys.argv[1])
